@@ -51,10 +51,16 @@ def get_video_data(channel_url,channel_id):
         if "odysee" in channel_url:
             p = i["updated_parsed"]
             parsed = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
+            published_int = int(parsed)
         if "bitchute" in channel_url:
             parsed=published
+            published_list = published.split(",")
+            published_int = utils.convert_timestamp(published_list[1])
+
         if "youtube" in channel_url:
             parsed = published
+            published_list = published.split(",")
+            published_int = utils.convert_timestamp(published_list[1])
         if not channel_found:
             # add the video to the queue
             queue.append(i)
@@ -64,7 +70,7 @@ def get_video_data(channel_url,channel_id):
             channel_found = True
         # if the channel exists in channels_timestamps, update "published" time in the channel line
         else:
-            published_int = int(parsed)
+
             ctr_line_list = ctr_line.split(",")
             line_published_int = int(ctr_line_list[1])
             #print(parsed+" ("+str(published_int - line_published_int)+") comparing "+ctr_line_list[1])

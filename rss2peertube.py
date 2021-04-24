@@ -66,7 +66,7 @@ def get_video_data(channel_url,channel_name):
             print(published)
             #published_list = published.split(",")
             #print(published_list[1])
-            published_int = utils.convert_timestamp(published])
+            published_int = utils.convert_timestamp(published)
         #print(parsed+" converts to "+ str(published_int))
         if not channel_found:
             # add the video to the queue

@@ -63,7 +63,6 @@ def get_video_data(channel_url,channel_name):
             #print(parsed+" converts to "+ str(published_int))
         if "youtube" in channel_url:
             parsed = published
-            print(published)
             #published_list = published.split(",")
             #print(published_list[1])
             published_int = utils.convert_timestamp(published)
@@ -155,7 +154,7 @@ def run_steps(conf):
                 cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
                 cline = cline + " --tmpdir '/home/marc/Downloads'"
                 print (cline)
-                #os.system(cline)
+                os.system(cline)
         channel_counter += 1
 
 def run(run_once=True):

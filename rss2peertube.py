@@ -71,7 +71,7 @@ def get_video_data(channel_url,channel_id,channel_name):
             channel_found = True
         # if the channel exists in channels_timestamps, update "published" time in the channel line
         else:
-            print(ctr_line_list)
+            print(ctr_line)
             ctr_line_list = ctr_line.split(",")
             line_published_int = int(ctr_line_list[1])
             #print(parsed+" ("+str(published_int - line_published_int)+") comparing "+ctr_line_list[1])

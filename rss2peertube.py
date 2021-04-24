@@ -24,6 +24,7 @@ def get_video_data(channel_url,channel_name):
     #channel_lang = feed["feed"]["title_detail"]["language"]
     #print(feed["feed"])
     entries = feed["entries"]
+
     channels_timestamps = "channels_timestamps.csv"
     # clear any existing queue before start
     queue = []
@@ -42,7 +43,7 @@ def get_video_data(channel_url,channel_name):
             break
     if not channel_found:
         print("new channel added to config: " + channel_name)
-    print(str(datetime.now().strftime("%m/%d %H:%M:%S"))+" : checking "+channel_name+"          ")
+    print(str(datetime.now().strftime("%m/%d %H:%M:%S"))+" : checking "+str(len(entries))+" in "+channel_name+"          ")
     #print ("\033[2A")
     # iterate through video entries for channel, parse data into objects for use
     for pos, i in enumerate(reversed(entries)):

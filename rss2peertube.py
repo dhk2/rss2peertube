@@ -17,6 +17,7 @@ from requests_toolbelt.multipart.encoder import MultipartEncoder
 import utils
 
 def get_video_data(channel_url,channel_id):
+    print ("getting video for "+channel_id+" at "+channel_url)
     #o_rss_url = "https://lbryfeed.melroy.org/channel/odysee/" + channel_id
     feed = fp.parse(channel_url)
     print (len(feed))
@@ -70,7 +71,7 @@ def get_video_data(channel_url,channel_id):
             channel_found = True
         # if the channel exists in channels_timestamps, update "published" time in the channel line
         else:
-
+            print(ctr_line_list)
             ctr_line_list = ctr_line.split(",")
             line_published_int = int(ctr_line_list[1])
             #print(parsed+" ("+str(published_int - line_published_int)+") comparing "+ctr_line_list[1])

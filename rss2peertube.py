@@ -17,10 +17,10 @@ from requests_toolbelt.multipart.encoder import MultipartEncoder
 import utils
 
 def get_video_data(channel_url,channel_name):
-    print ("getting video for "+channel_name+" at "+channel_url)
+    #print ("getting video for "+channel_name+" at "+channel_url)
     #o_rss_url = "https://lbryfeed.melroy.org/channel/odysee/" + channel_id
     feed = fp.parse(channel_url)
-    print (len(feed))
+    #print (len(feed))
     #channel_lang = feed["feed"]["title_detail"]["language"]
     #print(feed["feed"])
     entries = feed["entries"]
@@ -47,7 +47,7 @@ def get_video_data(channel_url,channel_name):
     #print ("\033[2A")
     # iterate through video entries for channel, parse data into objects for use
     for pos, i in enumerate(reversed(entries)):
-        print(i["title"])
+        #print(i["title"])
         published = i["published"]
         updated = i["updated"]
         parsed=published
@@ -55,17 +55,17 @@ def get_video_data(channel_url,channel_name):
             p = i["updated_parsed"]
             parsed = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
             published_int = int(parsed)
-            print(parsed+" converts to "+ str(published_int))
+            #print(parsed+" converts to "+ str(published_int))
         if "bitchute" in channel_url:
             p = i["updated_parsed"]
             parsed = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
             published_int = int(parsed)
-            print(parsed+" converts to "+ str(published_int))
+            #print(parsed+" converts to "+ str(published_int))
         if "youtube" in channel_url:
             parsed = published
             published_list = published.split(",")
             published_int = utils.convert_timestamp(published_list[1])
-        print(parsed+" converts to "+ str(published_int))
+        #print(parsed+" converts to "+ str(published_int))
         if not channel_found:
             # add the video to the queue
             queue.append(i)
@@ -76,11 +76,11 @@ def get_video_data(channel_url,channel_name):
             channel_found = True
         # if the channel exists in channels_timestamps, update "published" time in the channel line
         else:
-            print(ctr_line)
+            #print(ctr_line)
             ctr_line_list = ctr_line.split(",")
             line_published_int = int(ctr_line_list[1])
             #print(parsed+" ("+str(published_int - line_published_int)+") comparing "+ctr_line_list[1])
-            print (str(published_int)+" - "+str(line_published_int)+" = "+str(published_int-line_published_int))
+            p#rint (str(published_int)+" - "+str(line_published_int)+" = "+str(published_int-line_published_int))
             if published_int > line_published_int:
                 # update the timestamp in the line for the channel in channels_timestamps,
                 ctr.remove(ctr_line)
@@ -93,7 +93,7 @@ def get_video_data(channel_url,channel_name):
     for line in ctr:
         if line != '':
             ct.write(line + "\n")
-            print ("writing line "+line)
+            #print ("writing line "+line)
     ct.close()
     return queue, "en"
 
@@ -116,7 +116,7 @@ def run_steps(conf):
         #print("\n")
         channel_url = channel[c]["channel_url"]
         channel_name = channel[c]["name"]
-        print (channel_url+" is "+channel_name)
+        #print (channel_url+" is "+channel_name)
         parts=channel_url.split("/")
         channel_service="unknown"
         if "bitchute" in parts[2]:
@@ -137,19 +137,19 @@ def run_steps(conf):
                 video_url = queue_item["link"]
                 print (video_url)
                 pt_instance=channel_conf["peertube_instance"]
-                #print (pt_instance)
+                print (pt_instance)
                 hack = pt_instance.split("/")
-                #print(hack)
+                print(hack)
                 server_url=hack[2]
                 video_url = video_url.replace("embed","video")
-                #print (video_url)
+                print (video_url)
                 pt_uname = channel_conf["peertube_username"]
                 pt_passwd = channel_conf["peertube_password"]
                 # server_url = "based.directory"
                 cline = "cd /var/www/peertube/PeerTube/ && node dist/server/tools/peertube-import-videos.js -u '"
                 cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
                 cline = cline + " --tmpdir '/home/marc/Downloads'"
-                #print (cline)
+                print (cline)
                 #os.system(cline)
         channel_counter += 1
 

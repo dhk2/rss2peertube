@@ -221,7 +221,7 @@ def run_steps(conf):
                 if channel_service == "youtube":
                     pt_result = pt_http_import(dl_dir, channel_conf, queue_item, access_token, thumb_extension, yt_lang)
                 else:
-                    cline = "cd /home/marc/PeerTube/ && server/tools/peertube-import-videos.js -u '"
+                    cline = "cd /home/marc/PeerTube/ && /home/marc/PeerTube/server/tools/peertube-import-videos.js -u '"
                     cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
                     cline = cline + " --tmpdir '/home/marc/Downloads'"
                     print (cline)

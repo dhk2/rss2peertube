@@ -56,7 +56,7 @@ def get_video_data(channel_url,channel_id,channel_name):
             published_int = int(parsed)
         if "bitchute" in channel_url:
             parsed=published
-            published_list = published.split(",")
+            published_list = published.split(" ")
             for p in published_list:
                 print(p)
             published_int =1

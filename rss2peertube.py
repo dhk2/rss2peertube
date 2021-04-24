@@ -16,6 +16,7 @@ from requests_toolbelt.multipart.encoder import MultipartEncoder
 import utils
 
 def get_video_data(channel_id):
+    #Determine which  service to use
     o_rss_url = "https://lbryfeed.melroy.org/channel/odysee/" + channel_id
     feed = fp.parse(o_rss_url)
     #channel_lang = feed["feed"]["title_detail"]["language"]

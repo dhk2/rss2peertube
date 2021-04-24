@@ -45,7 +45,7 @@ def get_video_data(channel_id):
     for pos, i in enumerate(reversed(entries)):
         published = i["published"]
         updated = i["updated"]
-        p = i["updated_parsed"] 
+        p = i["updated_parsed"]
         # convert date to proper format instead of using util because date format is different than yt
 
         parsed = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
@@ -94,7 +94,12 @@ def run_steps(conf):
     channel_counter = 0
     for c in channel:
         #print("\n")
-        channel_id = channel[c]["channel_id"]
+        channel_url = channel[c]["channel_url]"]
+        print (channel_url)
+        parts=channel_url.split("/")
+        for part in parts
+            print(part)
+        channel_id = "not now bob"
         channel_conf = channel[str(channel_counter)]
         video_data = get_video_data(channel_id)
         queue = video_data[0]
@@ -117,7 +122,7 @@ def run_steps(conf):
                 cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
                 cline = cline + " --tmpdir '/home/marc/Downloads'"
                 #print (cline)
-                os.system(cline)
+                #os.system(cline)
         channel_counter += 1
 
 def run(run_once=True):

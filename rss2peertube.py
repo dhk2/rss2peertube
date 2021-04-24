@@ -40,7 +40,7 @@ def get_video_data(channel_url,channel_id):
             break
     if not channel_found:
         print("new channel added to config: " + channel_id)
-    print(str(datetime.now().strftime("%m/%d %H:%M:%S"))+" : checking "+channel_id+"
+    print(str(datetime.now().strftime("%m/%d %H:%M:%S"))+" : checking "+channel_id+"          ")
     print ("\033[2A")
     # iterate through video entries for channel, parse data into objects for use
     for pos, i in enumerate(reversed(entries)):

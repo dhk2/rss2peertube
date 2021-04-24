@@ -108,7 +108,7 @@ def run_steps(conf):
     for c in channel:
         #print("\n")
         channel_url = channel[c]["channel_url"]
-        channel_name = channel[c]["channel_name"]
+        channel_name = channel[c]["name"]
         print (channel_url+" is "+channel_name)
         parts=channel_url.split("/")
         channel_service="unknown"

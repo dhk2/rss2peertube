@@ -47,12 +47,13 @@ def get_video_data(channel_url,channel_id):
     for pos, i in enumerate(reversed(entries)):
         published = i["published"]
         updated = i["updated"]
-        if "odysee" in system_url:
+        parsed=published
+        if "odysee" in channel_url:
             p = i["updated_parsed"]
             parsed = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
-        if "bitchute" in system_url:
+        if "bitchute" in channel_url:
             parsed=published
-        if "youtube" in system_url:
+        if "youtube" in channel_url:
             parsed = published
         if not channel_found:
             # add the video to the queue

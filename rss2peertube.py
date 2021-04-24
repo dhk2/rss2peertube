@@ -82,7 +82,7 @@ def get_video_data(channel_url,channel_name):
             ctr_line_list = ctr_line.split(",")
             if "youtube" in channel_url:
                 line_published_int = utils.convert_timestamp(ctr_line_list[1])
-            else
+            else:
                 line_published_int = int(ctr_line_list[1])
             #print(parsed+" ("+str(published_int - line_published_int)+") comparing "+ctr_line_list[1])
             p#rint (str(published_int)+" - "+str(line_published_int)+" = "+str(published_int-line_published_int))

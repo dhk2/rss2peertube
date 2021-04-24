@@ -98,15 +98,15 @@ def run_steps(conf):
         print (channel_url)
         parts=channel_url.split("/")
         channel_service="unknown"
-        if "bitchute" in part[2]:
+        if "bitchute" in parts[2]:
             channel_service = "bitchute"
-        if "youtube" in part[2]:
+        if "youtube" in parts[2]:
             channel_service = "youtube"
-        if "odysee" in part[2]:
+        if "odysee" in parts[2]:
             channel_service = "odysee"
         for part in parts:
             print(part)
-        channel_id = part[-1]
+        channel_id = parts[-1]
         channel_conf = channel[str(channel_counter)]
         video_data = get_video_data(channel_id)
         queue = video_data[0]

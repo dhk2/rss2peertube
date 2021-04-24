@@ -46,7 +46,7 @@ def get_video_data(channel_url,channel_name):
     #print ("\033[2A")
     # iterate through video entries for channel, parse data into objects for use
     for pos, i in enumerate(reversed(entries)):
-        #print(i)
+        print(i["title"])
         published = i["published"]
         updated = i["updated"]
         parsed=published
@@ -64,7 +64,7 @@ def get_video_data(channel_url,channel_name):
             parsed = published
             published_list = published.split(",")
             published_int = utils.convert_timestamp(published_list[1])
-            print(parsed+" converts to "+ str(published_int))
+        print(parsed+" converts to "+ str(published_int))
         if not channel_found:
             # add the video to the queue
             queue.append(i)
@@ -79,6 +79,7 @@ def get_video_data(channel_url,channel_name):
             ctr_line_list = ctr_line.split(",")
             line_published_int = int(ctr_line_list[1])
             #print(parsed+" ("+str(published_int - line_published_int)+") comparing "+ctr_line_list[1])
+            print (str(published_int)+" - "+str(line_published_int)+" = "+str(published_int-line_published_int))
             if published_int > line_published_int:
                 # update the timestamp in the line for the channel in channels_timestamps,
                 ctr.remove(ctr_line)

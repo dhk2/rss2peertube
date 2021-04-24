@@ -40,16 +40,19 @@ def get_video_data(channel_url,channel_id):
             break
     if not channel_found:
         print("new channel added to config: " + channel_id)
-    print(channel_id+"                ")
+    print(str(datetime.now().strftime("%m/%d %H:%M:%S"))+" : checking "+channel_id+"
     print ("\033[2A")
     # iterate through video entries for channel, parse data into objects for use
     for pos, i in enumerate(reversed(entries)):
         published = i["published"]
         updated = i["updated"]
-        p = i["updated_parsed"]
-        # convert date to proper format instead of using util because date format is different than yt
-
-        parsed = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
+        if "odysee" in system_url:
+            p = i["updated_parsed"]
+            parsed = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
+        if "bitchute" in system_url:
+            parsed=published
+        if "youtube" in system_url:
+            parsed = published
         if not channel_found:
             # add the video to the queue
             queue.append(i)

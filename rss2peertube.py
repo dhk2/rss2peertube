@@ -46,6 +46,7 @@ def get_video_data(channel_url,channel_id,channel_name):
     print ("\033[2A")
     # iterate through video entries for channel, parse data into objects for use
     for pos, i in enumerate(reversed(entries)):
+        print(i)
         published = i["published"]
         updated = i["updated"]
         parsed=published
@@ -56,7 +57,9 @@ def get_video_data(channel_url,channel_id,channel_name):
         if "bitchute" in channel_url:
             parsed=published
             published_list = published.split(",")
-            published_int = utils.convert_timestamp(published_list[1])
+            for p in published_list:
+                print(p)
+            published_int =1
 
         if "youtube" in channel_url:
             parsed = published

@@ -94,7 +94,7 @@ def run_steps(conf):
     channel_counter = 0
     for c in channel:
         #print("\n")
-        channel_url = channel[c]["channel_url]"]
+        channel_url = channel[c]["channel_url"]
         print (channel_url)
         parts=channel_url.split("/")
         for part in parts:

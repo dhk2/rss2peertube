@@ -64,8 +64,8 @@ def get_video_data(channel_url,channel_name):
         if "youtube" in channel_url:
             parsed = published
             print(published)
-            published_list = published.split(",")
-            print(published_list[1])
+            #published_list = published.split(",")
+            #print(published_list[1])
             published_int = utils.convert_timestamp(published_list[1])
         #print(parsed+" converts to "+ str(published_int))
         if not channel_found:

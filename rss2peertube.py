@@ -55,11 +55,9 @@ def get_video_data(channel_url,channel_id,channel_name):
             parsed = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
             published_int = int(parsed)
         if "bitchute" in channel_url:
-            parsed=published
-            published_list = published.split(" ")
-            for p in published_list:
-                print(p)
-            published_int =1
+            p = i["updated_parsed"]
+            parsed = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
+            published_int = int(parsed)
 
         if "youtube" in channel_url:
             parsed = published

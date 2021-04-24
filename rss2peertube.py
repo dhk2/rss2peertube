@@ -243,7 +243,7 @@ def run(run_once=True):
 def main(argv):
   run_once=False
   try:
-    opts, args = getopt.getopt(argv,"ho",["help","once"])
+    opts, args = getopt.getopt(argv,"hor",["help","once","reset"])
   except:
     print("youtube2peertube.py [-o|--once]")
     sys(exit(2))
@@ -258,7 +258,6 @@ def main(argv):
       file = open("channels_timestamps.csv","r+")
       file. truncate(0)
       file. close()
-
   run(run_once)
 
 

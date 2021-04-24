@@ -16,7 +16,7 @@ from datetime import datetime
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 import utils
 
-def get_video_data(channel_url,channel_id):
+def get_video_data(channel_url,channel_id,channel_name):
     print ("getting video for "+channel_id+" at "+channel_url)
     #o_rss_url = "https://lbryfeed.melroy.org/channel/odysee/" + channel_id
     feed = fp.parse(channel_url)
@@ -36,13 +36,13 @@ def get_video_data(channel_url,channel_id):
     # check if channel ID is found in channels_timestamps.csv
     for line in ctr:
         line_list = line.split(',')
-        if channel_id == line_list[0]:
+        if channel_name == line_list[0]:
             channel_found = True
             ctr_line = line
             break
     if not channel_found:
-        print("new channel added to config: " + channel_id)
-    print(str(datetime.now().strftime("%m/%d %H:%M:%S"))+" : checking "+channel_id+"          ")
+        print("new channel added to config: " + channel_name)
+    print(str(datetime.now().strftime("%m/%d %H:%M:%S"))+" : checking "+channel_name+"          ")
     print ("\033[2A")
     # iterate through video entries for channel, parse data into objects for use
     for pos, i in enumerate(reversed(entries)):
@@ -65,7 +65,7 @@ def get_video_data(channel_url,channel_id):
         if not channel_found:
             # add the video to the queue
             queue.append(i)
-            ctr_line = str(channel_id + "," + parsed + "," + parsed + '\n')
+            ctr_line = str(channel_name + "," + parsed + "," + parsed + '\n')
             # add the new line to ctr for adding to channels_timestamps later
             ctr.append(ctr_line)
             channel_found = True
@@ -108,7 +108,8 @@ def run_steps(conf):
     for c in channel:
         #print("\n")
         channel_url = channel[c]["channel_url"]
-        print (channel_url)
+        channel_name = channel[c]["channel_name"]
+        print (channel_url+" is "+channel_name)
         parts=channel_url.split("/")
         channel_service="unknown"
         if "bitchute" in parts[2]:
@@ -121,7 +122,7 @@ def run_steps(conf):
             print(part)
         channel_id = parts[-1]
         channel_conf = channel[str(channel_counter)]
-        video_data = get_video_data(channel_url,channel_id)
+        video_data = get_video_data(channel_url,channel_id,channel_name)
         queue = video_data[0]
         if len(queue) > 0:
             for queue_item in queue:

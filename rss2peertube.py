@@ -43,7 +43,7 @@ def get_video_data(channel_url,channel_name):
     if not channel_found:
         print("new channel added to config: " + channel_name)
     print(str(datetime.now().strftime("%m/%d %H:%M:%S"))+" : checking "+channel_name+"          ")
-    print ("\033[2A")
+    #print ("\033[2A")
     # iterate through video entries for channel, parse data into objects for use
     for pos, i in enumerate(reversed(entries)):
         #print(i)
@@ -63,6 +63,7 @@ def get_video_data(channel_url,channel_name):
             parsed = published
             published_list = published.split(",")
             published_int = utils.convert_timestamp(published_list[1])
+            print(parsed+" converts to "+ str(published_int))
         if not channel_found:
             # add the video to the queue
             queue.append(i)

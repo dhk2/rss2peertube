@@ -16,8 +16,8 @@ from datetime import datetime
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 import utils
 
-def get_video_data(channel_url,channel_id,channel_name):
-    print ("getting video for "+channel_id+" at "+channel_url)
+def get_video_data(channel_url,channel_name):
+    print ("getting video for "+channel_name+" at "+channel_url)
     #o_rss_url = "https://lbryfeed.melroy.org/channel/odysee/" + channel_id
     feed = fp.parse(channel_url)
     print (len(feed))
@@ -79,7 +79,7 @@ def get_video_data(channel_url,channel_id,channel_name):
             if published_int > line_published_int:
                 # update the timestamp in the line for the channel in channels_timestamps,
                 ctr.remove(ctr_line)
-                ctr_line = str(channel_id + "," + parsed + "," + parsed + '\n')
+                ctr_line = str(channel_name + "," + parsed + "," + parsed + '\n')
                 ctr.append(ctr_line)
                 # and add current videos to queue.
                 queue.append(i)
@@ -123,7 +123,7 @@ def run_steps(conf):
             print(part)
         channel_id = parts[-1]
         channel_conf = channel[str(channel_counter)]
-        video_data = get_video_data(channel_url,channel_id,channel_name)
+        video_data = get_video_data(channel_url,channel_name)
         queue = video_data[0]
         if len(queue) > 0:
             for queue_item in queue:

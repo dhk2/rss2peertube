@@ -85,7 +85,7 @@ def get_video_data(channel_url,channel_name):
             else:
                 line_published_int = int(ctr_line_list[1])
             #print(parsed+" ("+str(published_int - line_published_int)+") comparing "+ctr_line_list[1])
-            p#rint (str(published_int)+" - "+str(line_published_int)+" = "+str(published_int-line_published_int))
+            #rint (str(published_int)+" - "+str(line_published_int)+" = "+str(published_int-line_published_int))
             if published_int > line_published_int:
                 # update the timestamp in the line for the channel in channels_timestamps,
                 ctr.remove(ctr_line)

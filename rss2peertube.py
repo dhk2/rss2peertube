@@ -97,7 +97,7 @@ def run_steps(conf):
         channel_url = channel[c]["channel_url]"]
         print (channel_url)
         parts=channel_url.split("/")
-        for part in parts
+        for part in parts:
             print(part)
         channel_id = "not now bob"
         channel_conf = channel[str(channel_counter)]

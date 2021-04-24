@@ -254,6 +254,10 @@ def main(argv):
       sys.exit()
     elif opt in ("-o", "--once"):
       run_once = True
+    elif op int ("-r", "--reset")
+      file = open("channels_timestamps.csv","r+")
+      file. truncate(0)
+      file. close()
 
   run(run_once)
 

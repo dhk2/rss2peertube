@@ -54,11 +54,12 @@ def get_video_data(channel_url,channel_name):
             p = i["updated_parsed"]
             parsed = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
             published_int = int(parsed)
+            print(parsed+" converts to "+ str(published_int))
         if "bitchute" in channel_url:
             p = i["updated_parsed"]
             parsed = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
             published_int = int(parsed)
-
+            print(parsed+" converts to "+ str(published_int))
         if "youtube" in channel_url:
             parsed = published
             published_list = published.split(",")
@@ -70,6 +71,7 @@ def get_video_data(channel_url,channel_name):
             ctr_line = str(channel_name + "," + parsed + "," + parsed + '\n')
             # add the new line to ctr for adding to channels_timestamps later
             ctr.append(ctr_line)
+            print ("channel not found, adding "+ctr_line)
             channel_found = True
         # if the channel exists in channels_timestamps, update "published" time in the channel line
         else:
@@ -89,6 +91,7 @@ def get_video_data(channel_url,channel_name):
     for line in ctr:
         if line != '':
             ct.write(line + "\n")
+            print ("writing line "+line)
     ct.close()
     return queue, "en"
 

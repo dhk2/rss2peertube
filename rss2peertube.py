@@ -46,7 +46,7 @@ def get_video_data(channel_url,channel_id,channel_name):
     print ("\033[2A")
     # iterate through video entries for channel, parse data into objects for use
     for pos, i in enumerate(reversed(entries)):
-        print(i)
+        #print(i)
         published = i["published"]
         updated = i["updated"]
         parsed=published

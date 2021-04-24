@@ -15,7 +15,7 @@ import mimetypes
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 import utils
 
-def get_video_data(channel_url):
+def get_video_data(channel_url,channel_id):
     #o_rss_url = "https://lbryfeed.melroy.org/channel/odysee/" + channel_id
     feed = fp.parse(channel_url)
     print (len(feed))
@@ -109,7 +109,7 @@ def run_steps(conf):
             print(part)
         channel_id = parts[-1]
         channel_conf = channel[str(channel_counter)]
-        video_data = get_video_data(channel_url)
+        video_data = get_video_data(channel_url,channel_id)
         queue = video_data[0]
         if len(queue) > 0:
             for queue_item in queue:

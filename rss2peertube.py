@@ -218,7 +218,7 @@ def run_steps(conf):
                 pt_uname = channel_conf["peertube_username"]
                 pt_passwd = channel_conf["peertube_password"]
                 # server_url = "based.directory"
-                if channel_service = "youtube":
+                if channel_service == "youtube":
                     pt_result = pt_http_import(dl_dir, channel_conf, queue_item, access_token, thumb_extension, yt_lang)
                 else:
                     cline = "cd /var/www/peertube/PeerTube/ && node dist/server/tools/peertube-import-videos.js -u '"

@@ -3,7 +3,6 @@
 import os
 import sys
 import getopt
-import pafy
 import feedparser as fp
 from urllib.request import urlretrieve
 import requests

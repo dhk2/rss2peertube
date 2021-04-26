@@ -218,7 +218,7 @@ def run_steps(conf):
                 pt_uname = channel_conf["peertube_username"]
                 pt_passwd = channel_conf["peertube_password"]
                 # server_url = "based.directory"
-                if channel_service == "youtube":
+                if channel_service == "youtubered":
                     pt_result = pt_http_import(dl_dir, channel_conf, queue_item, access_token, thumb_extension, yt_lang)
                 else:
                     #cline = "cd /home/marc/PeerTube/ && node server/tools/peertube-import-videos.ts -u '"

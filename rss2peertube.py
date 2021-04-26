@@ -205,7 +205,7 @@ def run_steps(conf):
         queue = video_data[0]
         if len(queue) > 0:
             for queue_item in queue:
-                print("mirroring " + queue_item["link"] + " to Peertube using HTTP import...")
+                print("mirroring " + queue_item["title"] + " to Peertube using HTTP import on "+queue_item["link"])
                 video_url = queue_item["link"]
                 print (video_url)
                 pt_instance=channel_conf["peertube_instance"]

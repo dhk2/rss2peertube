@@ -28,7 +28,7 @@ def dupe_check(published,title):
         # check if channel name is found in channels_timestamps.csv
         for line in ctr:
             line_list = line.split(',')
-            print (line_list[1]+"-"+published+" = "+str(int(line_list[1])-published))
+            print (line_list[1]+"-"+str(published)+" = "+str(int(line_list[1])-published))
             print(SequenceMatcher(a=title,b=line_list[2]).ratio())
         return video_found
 def set_pt_lang(yt_lang, conf_lang):

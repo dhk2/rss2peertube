@@ -27,6 +27,8 @@ def dupe_check(published,title):
         video_found = False
         # check if channel name is found in channels_timestamps.csv
         print ("checking against "+str(len(ctr))+" videos")
+        if len(ctr) == 2:
+            return false
         for line in ctr:
             print(line+"\n")
             line_list = line.split(',')

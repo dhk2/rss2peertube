@@ -31,8 +31,9 @@ def dupe_check(published,title):
             line_list = line.split(',')
             if len(line_list) > 1:
                 #print (line_list[1]+"-"+str(published)+" = "+str(int(line_list[1])-published))
-                print("comparing "+line_list[2])
-                print(SequenceMatcher(a=title,b=line_list[2]).ratio())
+                match = SequenceMatcher(a=title,b=line_list[2]).ratio()
+                if match >.9:
+                    print (str(match)+" "+line_list[2]+" "+str((int(line_list[1])-published))
         return video_found
 def set_pt_lang(yt_lang, conf_lang):
     YOUTUBE_LANGUAGE = {

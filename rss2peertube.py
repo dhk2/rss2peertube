@@ -135,7 +135,7 @@ def run_steps(conf):
                     print(cline)
                     #os.system(cline)
                     file = open ("videos.log","a+")
-                    file.write(channel_conf["name"]+","+queue_item["pubdate"]+","+queue_item["title"])
+                    file.write(channel_conf["name"]+","+queue_item["published"]+","+queue_item["title"])
                     file.close
         channel_counter += 1
 

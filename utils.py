@@ -13,7 +13,7 @@ def convert_timestamp(timestamp):
     time = timestamp[1].split('+')
     time = time[0].split(':')
     timestamp = int(date[0] + date[1] + date[2] + time[0] + time[1] + time[2])
-    print("timestamp:"+timestamp)
+    print(timestamp)
     return timestamp
 
 def set_pt_lang(yt_lang, conf_lang):

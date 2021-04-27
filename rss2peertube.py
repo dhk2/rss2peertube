@@ -62,7 +62,7 @@ def get_video_data(channel_url,channel_name):
         else:
             ctr_line_list = ctr_line.split(",")
             if "youtube" in channel_url:
-                line_published_int = utils.convert_timestamp(ctr_line_list[1])
+                line_published_int = ctr_line_list[1]
             else:
                 line_published_int = int(ctr_line_list[1])
             if published_int > line_published_int:

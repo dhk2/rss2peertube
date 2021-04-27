@@ -147,6 +147,7 @@ def run_steps(conf):
                     title = title.replace(",",".")
                     title = title.replace("&#x27;","'")
                     title = title.replace("&quot;","'")
+                    title = title.replace("(video)","")
                     print("title:"+title)
                     file = open ("videos.log","a+")
                     file.write(channel_conf["name"]+","+published+","+title+"\n")

@@ -14,6 +14,7 @@ import mimetypes
 from datetime import datetime
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 import utils
+import logging
 
 def get_video_data(channel_url,channel_name):
     feed = fp.parse(channel_url)

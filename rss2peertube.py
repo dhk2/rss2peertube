@@ -111,8 +111,6 @@ def run_steps(conf):
             channel_service = "youtube"
         if "odysee" in parts[2]:
             channel_service = "odysee"
-        for part in parts:
-            print(part)
         channel_id = parts[-1]
         channel_conf = channel[str(channel_counter)]
         video_data = get_video_data(channel_url,channel_name)
@@ -121,14 +119,14 @@ def run_steps(conf):
             for queue_item in queue:
                 print("mirroring " + queue_item["title"] + " to Peertube using HTTP import on "+queue_item["link"])
                 video_url = queue_item["link"]
-                print (video_url)
+                log.debug(video_url)
                 pt_instance=channel_conf["peertube_instance"]
-                print (pt_instance)
+                log.debug(pt_instance)
                 hack = pt_instance.split("/")
-                print(hack)
+                log.debug(hack)
                 server_url=hack[2]
                 video_url = video_url.replace("embed","video")
-                print (video_url)
+                log.debug(video_url)
                 pt_uname = channel_conf["peertube_username"]
                 pt_passwd = channel_conf["peertube_password"]
                 if channel_service == "youtubered":
@@ -137,7 +135,7 @@ def run_steps(conf):
                     cline = "cd /var/www/peertube/PeerTube/ && node dist/server/tools/peertube-import-videos.js -u '"
                     cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
                     cline = cline + " --tmpdir '/home/marc/Downloads'"
-                    print (cline)
+                    log.debug(cline)
                     os.system(cline)
         channel_counter += 1
 

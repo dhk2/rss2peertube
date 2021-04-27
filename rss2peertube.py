@@ -144,7 +144,7 @@ def run_steps(conf):
                     else:
                         published = str(utils.convert_timestamp(p))
                     title = queue_item["title"]
-                    title.replace(",",".")
+                    title = title.replace(",",".")
                     print("title:"+title)
                     file = open ("videos.log","a+")
                     file.write(channel_conf["name"]+","+published+","+title+"\n")

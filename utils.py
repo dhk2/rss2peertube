@@ -34,7 +34,7 @@ def dupe_check(published,title):
                 return False
             #print (line_list[1]+"-"+str(published)+" = "+str(int(line_list[1])-published))
             for bob in line_list:
-                print(bob)
+                print("frak "+bob)
             print(SequenceMatcher(a=title,b=line_list[2]).ratio())
         return video_found
 def set_pt_lang(yt_lang, conf_lang):

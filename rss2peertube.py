@@ -136,10 +136,10 @@ def run_steps(conf):
                     #os.system(cline)
                     p = queue_item["published"]
                     if "," in p:
-                        published = str(utils.convert_timestamp(p))
-                    else:
                         p = i["updated_parsed"]
                         published = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
+                    else:
+                        published = str(utils.convert_timestamp(p))
                     file = open ("videos.log","a+")
                     file.write(channel_conf["name"]+","+published+","+queue_item["title"]+"\n")
                     file.close

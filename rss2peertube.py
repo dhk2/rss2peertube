@@ -137,6 +137,7 @@ def run_steps(conf):
                     #print(cline)
                     #os.system(cline)
                     p = queue_item["published"]
+                    treat as youtube or Odysee date format
                     if "," in p:
                         p = queue_item["updated_parsed"]
                         published = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
@@ -144,6 +145,7 @@ def run_steps(conf):
                         published = str(utils.convert_timestamp(p))
                     title = queue_item["title"]
                     title.replace(",",".")
+                    print(title)
                     file = open ("videos.log","a+")
                     file.write(channel_conf["name"]+","+published+","+title+"\n")
                     file.close

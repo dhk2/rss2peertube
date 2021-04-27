@@ -1,4 +1,5 @@
 import toml
+from difflib import SequenceMatcher
 
 def read_conf(conf_file):
     conf_file = open(conf_file)
@@ -10,12 +11,26 @@ def read_conf(conf_file):
 def convert_timestamp(timestamp):
     timestamp = timestamp.split('T')
     date = timestamp[0].split('-')
+    print(date[0])
     time = timestamp[1].split('+')
+
     time = time[0].split(':')
     timestamp = int(date[0] + date[1] + date[2] + time[0] + time[1] + time[2])
     print(timestamp)
     return timestamp
 
+def dupe_check(published,title)
+        ct = open("videos.log", "r")
+        ctr = ct.read().split("\n")
+        ct.close()
+        ctr_line = []
+        video_found = False
+        # check if channel name is found in channels_timestamps.csv
+        for line in ctr:
+            line_list = line.split(',')
+            print (line_list[1]+"-"+published+" = "+str(int(line_list[1])-published))
+            print(SequenceMatcher(a=title,b=line_list[2]).ratio())
+        return video_found
 def set_pt_lang(yt_lang, conf_lang):
     YOUTUBE_LANGUAGE = {
         "arabic": 'ar',

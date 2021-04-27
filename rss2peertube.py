@@ -50,6 +50,7 @@ def get_video_data(channel_url,channel_name):
         if "youtube" in channel_url:
             published_int = utils.convert_timestamp(published)
             parsed = str(published_int)
+        utils.dupe_check(published_int,i["title"])
         if not channel_found:
             # add the video to the queue
             queue.append(i)

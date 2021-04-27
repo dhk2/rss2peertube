@@ -30,7 +30,7 @@ def dupe_check(published,title):
         for line in ctr:
             print(line+"\n")
             line_list = line.split(',')
-            if len(line_list) == 0:
+            if len(line_list) == 1:
                 return False
             #print (line_list[1]+"-"+str(published)+" = "+str(int(line_list[1])-published))
             for bob in line_list:

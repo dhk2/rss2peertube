@@ -137,7 +137,7 @@ def run_steps(conf):
                     #print(cline)
                     #os.system(cline)
                     p = queue_item["published"]
-                    treat as youtube or Odysee date format
+                    #treat as youtube or Odysee date format
                     if "," in p:
                         p = queue_item["updated_parsed"]
                         published = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)

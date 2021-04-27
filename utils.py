@@ -34,7 +34,7 @@ def dupe_check(published,title):
             if len(line_list) > 1:
                 #print (line_list[1]+"-"+str(published)+" = "+str(int(line_list[1])-published))
                 if int(line_list[1]) == int(published):
-                    Print("Exact Time Match for "+line_list[2])
+                    print("Exact Time Match for "+line_list[2])
                     return true
                 match = SequenceMatcher(a=title,b=line_list[2]).ratio()
                 if match >best_match:

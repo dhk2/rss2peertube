@@ -133,7 +133,7 @@ def run_steps(conf):
                     cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
                     cline = cline + " --tmpdir '/home/marc/Downloads'"
                     print(cline)
-                    os.system(cline)
+                    #os.system(cline)
         channel_counter += 1
 
 def run(run_once=True):

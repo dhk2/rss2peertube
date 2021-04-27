@@ -26,16 +26,13 @@ def dupe_check(published,title):
         ctr_line = []
         video_found = False
         # check if channel name is found in channels_timestamps.csv
-        print ("checking against "+str(len(ctr))+" videos")
+        print ("checking ("+title+") against "+str(len(ctr))+" videos")
         for line in ctr:
-            print(line+"\n")
             line_list = line.split(',')
-            if len(line_list) == 1:
-                return False
-            #print (line_list[1]+"-"+str(published)+" = "+str(int(line_list[1])-published))
-            for bob in line_list:
-                print("frak "+bob)
-            print(SequenceMatcher(a=title,b=line_list[2]).ratio())
+            if len(line_list) > 1:
+                #print (line_list[1]+"-"+str(published)+" = "+str(int(line_list[1])-published))
+                print("comparing "+line_list[2])
+                print(SequenceMatcher(a=title,b=line_list[2]).ratio())
         return video_found
 def set_pt_lang(yt_lang, conf_lang):
     YOUTUBE_LANGUAGE = {

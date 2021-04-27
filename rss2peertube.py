@@ -41,16 +41,15 @@ def get_video_data(channel_url,channel_name):
     # iterate through video entries for channel, parse data into objects for use
     for pos, i in enumerate(reversed(entries)):
         published = i["published"]
-        updated = i["updated"]
+        #updated = i["updated"]
         parsed=published
-        print(published+"--"+updated)
         if ("odysee" in channel_url) or ("bitchute" in channel_url):
             p = i["updated_parsed"]
             parsed = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
             published_int = int(parsed)
         if "youtube" in channel_url:
-            parsed = published
             published_int = utils.convert_timestamp(published)
+            parsed = str(published_int)
         if not channel_found:
             # add the video to the queue
             queue.append(i)
@@ -86,10 +85,10 @@ def get_file(file_path):
     return (path.basename(file_path), open(path.abspath(file_path), 'rb'),
             mimetypes.types_map[path.splitext(file_path)[1]])
 
-def log_upload_error(yt_url,channel_conf):
-    error_file = open("video_errors.csv", "a")
-    error_file.write(channel_conf['name']+","+yt_url+"\n")
-    error_file.close()
+def log_video(line):
+    log_file = open("video.log.csv", "a")
+    log_file.write(channel_conf['name']+","+yt_url+"\n")
+    log_file.close()
     print("error !")
 
 def run_steps(conf):

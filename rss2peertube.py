@@ -134,6 +134,9 @@ def run_steps(conf):
                     cline = cline + " --tmpdir '/home/marc/Downloads'"
                     print(cline)
                     #os.system(cline)
+                    file = open ("videos.log","a+")
+                    file.write(channel_conf["name"]+","+queue_item["pubdate"+","+queue_item["title"]])
+                    file.close
         channel_counter += 1
 
 def run(run_once=True):

@@ -116,14 +116,14 @@ def run_steps(conf):
             for queue_item in queue:
                 print("mirroring " + queue_item["title"] + " to Peertube using HTTP import on "+queue_item["link"])
                 video_url = queue_item["link"]
-                log.debug(video_url)
+                print(video_url)
                 pt_instance=channel_conf["peertube_instance"]
-                log.debug(pt_instance)
+                print(pt_instance)
                 hack = pt_instance.split("/")
-                log.debug(hack)
+                print(hack)
                 server_url=hack[2]
                 video_url = video_url.replace("embed","video")
-                log.debug(video_url)
+                print(video_url)
                 pt_uname = channel_conf["peertube_username"]
                 pt_passwd = channel_conf["peertube_password"]
                 if channel_service == "youtubered":
@@ -132,7 +132,7 @@ def run_steps(conf):
                     cline = "cd /var/www/peertube/PeerTube/ && node dist/server/tools/peertube-import-videos.js -u '"
                     cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
                     cline = cline + " --tmpdir '/home/marc/Downloads'"
-                    log.debug(cline)
+                    print(cline)
                     os.system(cline)
         channel_counter += 1
 

@@ -19,7 +19,7 @@ def convert_timestamp(timestamp):
     print(timestamp)
     return timestamp
 
-def dupe_check(published,title)
+def dupe_check(published,title):
         ct = open("videos.log", "r")
         ctr = ct.read().split("\n")
         ct.close()

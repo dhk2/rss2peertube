@@ -50,7 +50,8 @@ def get_video_data(channel_url,channel_name):
         if "youtube" in channel_url:
             published_int = utils.convert_timestamp(published)
             parsed = str(published_int)
-        utils.dupe_check(published_int,i["title"])
+        if utils.dupe_check(published_int,i["title"]):
+            continue
         if not channel_found:
             # add the video to the queue
             queue.append(i)
@@ -117,14 +118,14 @@ def run_steps(conf):
             for queue_item in queue:
                 print("mirroring " + queue_item["title"] + " to Peertube using HTTP import on "+queue_item["link"])
                 video_url = queue_item["link"]
-                print(video_url)
+                #print(video_url)
                 pt_instance=channel_conf["peertube_instance"]
-                print(pt_instance)
+                #print(pt_instance)
                 hack = pt_instance.split("/")
-                print(hack)
+                #print(hack)
                 server_url=hack[2]
                 video_url = video_url.replace("embed","video")
-                print(video_url)
+                #print(video_url)
                 pt_uname = channel_conf["peertube_username"]
                 pt_passwd = channel_conf["peertube_password"]
                 if channel_service == "youtubered":
@@ -133,7 +134,7 @@ def run_steps(conf):
                     cline = "cd /var/www/peertube/PeerTube/ && node dist/server/tools/peertube-import-videos.js -u '"
                     cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
                     cline = cline + " --tmpdir '/home/marc/Downloads'"
-                    print(cline)
+                    #print(cline)
                     #os.system(cline)
                     p = queue_item["published"]
                     if "," in p:

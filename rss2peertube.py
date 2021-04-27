@@ -153,6 +153,7 @@ def run(run_once=True):
 
 
 def main(argv):
+  logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBUG)
   run_once=False
   try:
     opts, args = getopt.getopt(argv,"hor",["help","once","reset"])

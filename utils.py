@@ -41,6 +41,8 @@ def dupe_check(published,title):
                     best_match = match
                     duplicate= line_list[2]
         print(str(best_match)+ " "+duplicate)
+        if best_match >.9
+            video_found =True
         return video_found
 def set_pt_lang(yt_lang, conf_lang):
     YOUTUBE_LANGUAGE = {

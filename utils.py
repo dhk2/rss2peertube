@@ -11,12 +11,9 @@ def read_conf(conf_file):
 def convert_timestamp(timestamp):
     timestamp = timestamp.split('T')
     date = timestamp[0].split('-')
-    print(date[0])
     time = timestamp[1].split('+')
-
     time = time[0].split(':')
     timestamp = int(date[0] + date[1] + date[2] + time[0] + time[1] + time[2])
-    print(timestamp)
     return timestamp
 
 def dupe_check(published,title):
@@ -26,7 +23,7 @@ def dupe_check(published,title):
         ctr_line = []
         video_found = False
         # check if channel name is found in channels_timestamps.csv
-        print ("checking ("+title+") against "+str(len(ctr))+" videos")
+        #print ("checking ("+title+") against "+str(len(ctr))+" videos")
         best_match =0
         duplicate = ""
         for line in ctr:
@@ -36,13 +33,17 @@ def dupe_check(published,title):
                 match = SequenceMatcher(a=title,b=line_list[2]).ratio()
                 diff = abs(int(line_list[1])-published)
                 if int(line_list[1]) == int(published):
-                    print(str(match)+" Exact Time Match for "+line_list[2])
+                    #print(str(match)+" Exact Time Match for "+line_list[2])
                     if match>.8:
+                        if match < 1:
+                            print(str(match)+" is a close enough match between ["+line_list[2]+"] and ("+title+")")
                         return True
+                    else:
+                        print(str(match)+" is not a high enough match between ["+line_list[2]+"] and ("+title+")")
                 if match >best_match:
                     best_match = match
                     duplicate= line_list[2]
-                    print(str(best_match)+ " "+duplicate+" "+str(diff))
+                    #print(str(best_match)+ " "+duplicate+" "+str(diff))
         if best_match >.9:
             video_found =True
         return video_found

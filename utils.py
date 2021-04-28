@@ -37,12 +37,12 @@ def dupe_check(published,title):
                 diff = abs(int(line_list[1])-published)
                 if int(line_list[1]) == int(published):
                     print(str(match)+" Exact Time Match for "+line_list[2])
-                    if match>.8: 
+                    if match>.8:
                         return True
                 if match >best_match:
                     best_match = match
                     duplicate= line_list[2]
-                    print(str(best_match)+ " "+duplicate+" "+diff)
+                    print(str(best_match)+ " "+duplicate+" "+str(diff))
         if best_match >.9:
             video_found =True
         return video_found

@@ -130,7 +130,12 @@ def get_file(file_path):
     return (path.basename(file_path), open(path.abspath(file_path), 'rb'),
             mimetypes.types_map[path.splitext(file_path)[1]])
 
-
+def log_upload_error(yt_url,channel_conf):
+    error_file = open("video_errors.csv", "a")
+    error_file.write(channel_conf['name']+","+yt_url+"\n")
+    error_file.close()
+    print("error !")
+    
 def pt_cli_import(queue_item,channel_conf):
     video_url = queue_item["link"]
     #print(video_url)

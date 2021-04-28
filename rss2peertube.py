@@ -188,7 +188,7 @@ def run_steps(conf):
         if len(queue) > 0:
             for queue_item in queue:
                 print("mirroring " + queue_item["title"] + " to Peertube using HTTP import on "+queue_item["link"])
-                if global_conf["use_pt_http_import"]:
+                if global_conf["use_pt_http_import"] == "true":
                     #pt_result = pt_http_import(dl_dir, channel_conf, queue_item, access_token, thumb_extension, yt_lang)
                     print("trying to use wrong import method")
                 else:

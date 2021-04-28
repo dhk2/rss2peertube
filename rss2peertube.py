@@ -135,7 +135,7 @@ def log_upload_error(yt_url,channel_conf):
     error_file.write(channel_conf['name']+","+yt_url+"\n")
     error_file.close()
     print("error !")
-    
+
 def pt_cli_import(queue_item,channel_conf):
     video_url = queue_item["link"]
     #print(video_url)
@@ -148,11 +148,12 @@ def pt_cli_import(queue_item,channel_conf):
     #print(video_url)
     pt_uname = channel_conf["peertube_username"]
     pt_passwd = channel_conf["peertube_password"]
-    cline = "cd /var/www/peertube/PeerTube/ && node dist/server/tools/peertube-import-videos.js -u '"
+    cline = "cd /etc/home/PeerTube/ && node dist/server/tools/peertube-import-videos.js -u '"
     cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
     cline = cline + " --tmpdir '/home/marc/Downloads'"
     print(cline)
-    #os.system(cline)
+    os.system(cline)
+    return True
 
 def log_video(line):
     log_file = open("error.log.csv", "a")

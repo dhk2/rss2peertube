@@ -79,13 +79,78 @@ def get_video_data(channel_url,channel_name):
     ct.close()
     return queue, "en"
 
+def pt_http_import(dl_dir, channel_conf, queue_item, access_token, thumb_extension, yt_lang):
+    # Adapted from Prismedia https://git.lecygnenoir.info/LecygneNoir/prismedia
+    pt_api = channel_conf["peertube_instance"] + "/api/v1"
+    yt_video_url = queue_item["link"]
+    # TODO: use the alternate link if video not found error occurs
+    alternate_link = queue_item["links"][0]["href"]
+    thumb_file = dl_dir + channel_conf["name"] + "/" + queue_item["yt_videoid"] + "." + thumb_extension
+    description = channel_conf["description_prefix"] + "\n\n" + queue_item["summary"] + "\n\n" + channel_conf["description_suffix"]
+    channel_id = str(get_pt_channel_id(channel_conf))
+    language = utils.set_pt_lang(yt_lang, channel_conf["default_lang"])
+    category = utils.set_pt_category(channel_conf["pt_channel_category"])
+    # We need to transform fields into tuple to deal with tags as
+    # MultipartEncoder does not support list refer
+    # https://github.com/requests/toolbelt/issues/190 and
+    # https://github.com/requests/toolbelt/issues/205
+    fields = [
+        ("name", queue_item["title"]),
+        ("licence", "1"),
+        ("description", description),
+        ("nsfw", channel_conf["nsfw"]),
+        ("channelId", channel_id),
+        ("originallyPublishedAt", queue_item["published"]),
+        ("category", category),
+        ("language", language),
+        ("privacy", str(channel_conf["pt_privacy"])),
+        ("commentsEnabled", channel_conf["comments_enabled"]),
+        ("targetUrl", yt_video_url),
+        ("thumbnailfile", get_file(thumb_file)),
+        ("previewfile", get_file(thumb_file)),
+        ("waitTranscoding", 'false')
+    ]
+    print(fields)
+    return
+    if channel_conf["pt_tags"] != "":
+        fields.append(("tags[]", channel_conf["pt_tags"]))
+    else:
+        print("you have no tags in your configuration file for this channel")
+    multipart_data = MultipartEncoder(fields)
+    headers = {
+        'Content-Type': multipart_data.content_type,
+        'Authorization': "Bearer " + access_token
+    }
+
+    return handle_peertube_result(requests.post(pt_api + "/videos/imports", data=multipart_data, headers=headers))
+
+
 def get_file(file_path):
     mimetypes.init()
     return (path.basename(file_path), open(path.abspath(file_path), 'rb'),
             mimetypes.types_map[path.splitext(file_path)[1]])
 
+
+def pt_cli_import(queue_item,channel_conf):
+    video_url = queue_item["link"]
+    #print(video_url)
+    pt_instance=channel_conf["peertube_instance"]
+    #print(pt_instance)
+    hack = pt_instance.split("/")
+    #print(hack)
+    server_url=hack[2]
+    video_url = video_url.replace("embed","video")
+    #print(video_url)
+    pt_uname = channel_conf["peertube_username"]
+    pt_passwd = channel_conf["peertube_password"]
+    cline = "cd /var/www/peertube/PeerTube/ && node dist/server/tools/peertube-import-videos.js -u '"
+    cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
+    cline = cline + " --tmpdir '/home/marc/Downloads'"
+    print(cline)
+    #os.system(cline)
+
 def log_video(line):
-    log_file = open("video.log.csv", "a")
+    log_file = open("error.log.csv", "a")
     log_file.write(channel_conf['name']+","+yt_url+"\n")
     log_file.close()
     print("error !")
@@ -117,41 +182,29 @@ def run_steps(conf):
         if len(queue) > 0:
             for queue_item in queue:
                 print("mirroring " + queue_item["title"] + " to Peertube using HTTP import on "+queue_item["link"])
-                video_url = queue_item["link"]
-                #print(video_url)
-                pt_instance=channel_conf["peertube_instance"]
-                #print(pt_instance)
-                hack = pt_instance.split("/")
-                #print(hack)
-                server_url=hack[2]
-                video_url = video_url.replace("embed","video")
-                #print(video_url)
-                pt_uname = channel_conf["peertube_username"]
-                pt_passwd = channel_conf["peertube_password"]
-                if channel_service == "youtubered":
-                    pt_result = pt_http_import(dl_dir, channel_conf, queue_item, access_token, thumb_extension, yt_lang)
+                #pt_result = pt_http_import(dl_dir, channel_conf, queue_item, access_token, thumb_extension, yt_lang)
+                pt_result = pt_cli_import(queue_item,channel_conf)
+                if pt_result:
+                    print("done !")
                 else:
-                    cline = "cd /var/www/peertube/PeerTube/ && node dist/server/tools/peertube-import-videos.js -u '"
-                    cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
-                    cline = cline + " --tmpdir '/home/marc/Downloads'"
-                    #print(cline)
-                    #os.system(cline)
-                    p = queue_item["published"]
-                    #treat as youtube or Odysee date format
-                    if "," in p:
-                        p = queue_item["updated_parsed"]
-                        published = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
-                    else:
-                        published = str(utils.convert_timestamp(p))
-                    title = queue_item["title"]
-                    title = title.replace(",",".")
-                    title = title.replace("&#x27;","'")
-                    title = title.replace("&quot;","'")
-                    title = title.replace("(video)","")
-                    print("title:"+title)
-                    file = open ("videos.log","a+")
-                    file.write(channel_conf["name"]+","+published+","+title+"\n")
-                    file.close
+                    log_upload_error(queue_item["link"],channel_conf)
+                p = queue_item["published"]
+                #shortcut to differentiate dates with a weekday, format
+                if "," in p:
+                    p = queue_item["updated_parsed"]
+                    published = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
+                else:
+                    published = str(utils.convert_timestamp(p))
+                #fix some of the typical differences in title text betwixt sites and comma induced errors in the csv
+                title = queue_item["title"]
+                title = title.replace(",",".")
+                title = title.replace("&#x27;","'")
+                title = title.replace("&quot;","'")
+                title = title.replace("(video)","")
+                print("title:"+title)
+                file = open ("videos.log.csv","a+")
+                file.write(channel_conf["name"]+","+published+","+title+"\n")
+                file.close
         channel_counter += 1
 
 def run(run_once=True):

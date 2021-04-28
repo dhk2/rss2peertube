@@ -34,14 +34,15 @@ def dupe_check(published,title):
             if len(line_list) > 1:
                 #print (line_list[1]+"-"+str(published)+" = "+str(int(line_list[1])-published))
                 match = SequenceMatcher(a=title,b=line_list[2]).ratio()
-
+                diff = abs(int(line_list[1])-published)
                 if int(line_list[1]) == int(published):
                     print(str(match)+" Exact Time Match for "+line_list[2])
-                    return True
+                    if match>.8: 
+                        return True
                 if match >best_match:
                     best_match = match
                     duplicate= line_list[2]
-        print(str(best_match)+ " "+duplicate)
+                    print(str(best_match)+ " "+duplicate+" "+diff)
         if best_match >.9:
             video_found =True
         return video_found

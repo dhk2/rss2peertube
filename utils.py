@@ -17,6 +17,10 @@ def convert_timestamp(timestamp):
     return timestamp
 
 def dupe_check(published,title):
+        title = title.replace(",",".")
+        title = title.replace("&#x27;","'")
+        title = title.replace("&quot;","'")
+        title = title.replace("(video)","")
         ct = open("videos.log.csv", "r")
         ctr = ct.read().split("\n")
         ct.close()

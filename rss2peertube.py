@@ -158,7 +158,7 @@ def pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir,parallel_import):
     cline = "cd "+ cli_dir +" && node dist/server/tools/peertube-import-videos.js -u '"
     cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
     cline = cline + " --tmpdir '"+ dl_dir+"'"
-    if parallel_import == true:
+    if parallel_import == "true":
         cline=cline+"&"
     print(cline)
     os.system(cline)

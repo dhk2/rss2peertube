@@ -149,19 +149,15 @@ def log_upload_error(yt_url,channel_conf):
 
 def pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir):
     video_url = queue_item["link"]
-    #print(video_url)
     pt_instance=channel_conf["peertube_instance"]
-    #print(pt_instance)
     hack = pt_instance.split("/")
-    #print(hack)
     server_url=hack[2]
     video_url = video_url.replace("embed","video")
-    #print(video_url)
     pt_uname = channel_conf["peertube_username"]
     pt_passwd = channel_conf["peertube_password"]
     cline = "cd "+ cli_dir +" && node dist/server/tools/peertube-import-videos.js -u '"
     cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
-    cline = cline + " --tmpdir '"+ dl_dir+"'&"
+    cline = cline + " --tmpdir '"+ dl_dir+"'"
     print(cline)
     os.system(cline)
     return True
@@ -181,8 +177,11 @@ def run_steps(conf):
     cli_dir = global_conf["cli_dir"]
     if not path.exists(dl_dir):
         mkdir(dl_dir)
+    if not path.exists(cli_dir):
+        print("either the CLI tools aren't installed, or the path isn't configured in config.toml")
     channel_counter = 0
     for c in channel:
+        dupe_setting = global_conf["dupe_setting"]
         channel_url = channel[c]["channel_url"]
         channel_name = channel[c]["name"]
         parts=channel_url.split("/")
@@ -195,14 +194,14 @@ def run_steps(conf):
             channel_service = "odysee"
         channel_id = parts[-1]
         channel_conf = channel[str(channel_counter)]
-        video_data = get_video_data(channel_url,channel_name,global_conf["dupe_setting"])
+        video_data = get_video_data(channel_url,channel_name,dupe_setting)
         queue = video_data[0]
         if len(queue) > 0:
             for queue_item in queue:
-                print("mirroring " + queue_item["title"] + " to Peertube using HTTP import on "+queue_item["link"])
+                print("mirroring " + queue_item["title"] + " to Peertube from "+queue_item["link"])
                 if global_conf["use_pt_cli_import"] == "false":
                     pt_result = pt_http_import(dl_dir, channel_conf, queue_item, access_token, thumb_extension, yt_lang)
-                    print("trying to use wrong import method")
+                    print("using legacy import method")
                 else:
                     pt_result = pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir)
                 if pt_result:
@@ -228,7 +227,7 @@ def main(argv):
   logging.basicConfig(filename='example.log', level=logging.DEBUG)
   run_once=False
   try:
-    opts, args = getopt.getopt(argv,"hor",["help","once","reset"])
+    opts, args = getopt.getopt(argv,"horR",["help","once","reset","Reset"])
   except:
     print("youtube2peertube.py [-o|--once]")
     sys(exit(2))
@@ -241,6 +240,10 @@ def main(argv):
       run_once = True
     elif opt in ("-r", "--reset"):
       file = open("channels_timestamps.csv","r+")
+      file. truncate(0)
+      file. close()
+    elif opt in ("-R", "--Reset"):
+      file = open("videos.log.csv","r+")
       file. truncate(0)
       file. close()
   run(run_once)

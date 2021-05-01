@@ -21,8 +21,7 @@ def dupe_check(published,title,dupe_setting):
         title = title.replace("&#x27;","'")
         title = title.replace("&quot;","'")
         title = title.replace("(video)","")
-        ct = open("videos.log.csv", "a+")
-        ct.fseek(0)
+        ct = open("videos.log.csv", "r")
         ctr = ct.read().split("\n")
         ct.close()
         ctr_line = []

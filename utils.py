@@ -36,7 +36,7 @@ def dupe_check(published,title,dupe_setting):
             if len(line_list) > 1:
                 match = SequenceMatcher(a=title,b=line_list[2]).ratio()
                 diff = abs(int(line_list[1])-published)
-                print (str(diff)+": "+match)
+                print (str(diff)+": "+str(match))
                 if diff < 1000 and match>.98:
                     print ("easy match")
                     return true

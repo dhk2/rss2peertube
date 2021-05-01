@@ -80,7 +80,7 @@ def get_video_data(channel_url,channel_name,dupe_setting):
         title = title.replace("(video)","")
         print("title:"+title)
         file = open ("videos.log.csv","a+")
-        file.write(channel_conf["name"]+","+published+","+title+"\n")
+        file.write(channel_name+","+published+","+title+"\n")
         file.close
     # write the new channels and timestamps line to channels_timestamps.csv
     ct = open(channels_timestamps, "w")

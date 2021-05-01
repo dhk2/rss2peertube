@@ -16,7 +16,7 @@ from requests_toolbelt.multipart.encoder import MultipartEncoder
 import utils
 import logging
 
-def get_video_data(channel_url,channel_name):
+def get_video_data(channel_url,channel_name,dupe_setting):
     feed = fp.parse(channel_url)
     entries = feed["entries"]
     channels_timestamps = "channels_timestamps.csv"
@@ -50,7 +50,7 @@ def get_video_data(channel_url,channel_name):
         if "youtube" in channel_url:
             published_int = utils.convert_timestamp(published)
             parsed = str(published_int)
-        if utils.dupe_check(published_int,i["title"]):
+        if utils.dupe_check(published_int,i["title"],dupe_setting):
             continue
         if not channel_found:
             # add the video to the queue
@@ -183,7 +183,7 @@ def run_steps(conf):
             channel_service = "odysee"
         channel_id = parts[-1]
         channel_conf = channel[str(channel_counter)]
-        video_data = get_video_data(channel_url,channel_name)
+        video_data = get_video_data(channel_url,channel_name,global_conf["dupe_setting"])
         queue = video_data[0]
         if len(queue) > 0:
             for queue_item in queue:

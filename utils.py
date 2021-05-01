@@ -36,17 +36,16 @@ def dupe_check(published,title,dupe_setting):
             if len(line_list) > 1:
                 match = SequenceMatcher(a=title,b=line_list[2]).ratio()
                 diff = abs(int(line_list[1])-published)
-                print (str(diff)+": "+str(match))
                 if diff < 1000 and match>.98:
-                    print ("easy match")
+                    print ("easy match: "+str(match)+": "+str(diff))
                     return True
                 if diff == 0:
-                    print ("exact time")
+                    print ("exact time: "+str(match)+": "+str(diff))
                     return True
                 if match >dupe_setting:
-                    print ("title close enough")
+                    print ("title close enough: "+str(match)+": "+str(diff))
                     return True
-        return false
+        return False
 def set_pt_lang(yt_lang, conf_lang):
     YOUTUBE_LANGUAGE = {
         "arabic": 'ar',

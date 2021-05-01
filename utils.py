@@ -16,12 +16,13 @@ def convert_timestamp(timestamp):
     timestamp = int(date[0] + date[1] + date[2] + time[0] + time[1] + time[2])
     return timestamp
 
-def dupe_check(published,title):
+def dupe_check(published,title,dupe_setting):
         title = title.replace(",",".")
         title = title.replace("&#x27;","'")
         title = title.replace("&quot;","'")
         title = title.replace("(video)","")
-        ct = open("videos.log.csv", "r")
+        ct = open("videos.log.csv", "a+")
+        ct.fseek(0)
         ctr = ct.read().split("\n")
         ct.close()
         ctr_line = []
@@ -32,23 +33,21 @@ def dupe_check(published,title):
         duplicate = ""
         for line in ctr:
             line_list = line.split(',')
+            #ignore blank lines
             if len(line_list) > 1:
-                #print (line_list[1]+"-"+str(published)+" = "+str(int(line_list[1])-published))
                 match = SequenceMatcher(a=title,b=line_list[2]).ratio()
                 diff = abs(int(line_list[1])-published)
-                if int(line_list[1]) == int(published):
-                    #print(str(match)+" Exact Time Match for "+line_list[2])
-                    if match>.8:
-                        return True
-                    else:
-                        print(str(match)+" is not a high enough match between ["+line_list[2]+"] and ("+title+")")
-                if match >best_match:
-                    best_match = match
-                    duplicate= line_list[2]
-                    #print(str(best_match)+ " "+duplicate+" "+str(diff))
-        if best_match >.9:
-            video_found =True
-        return video_found
+                print (str(diff)+": "+match)
+                if (diff < 1000) && (match>.98):
+                    print ("easy match")
+                    return true
+                if diff == 0:
+                    print ("exact time")
+                    return True
+                if match >dupe_setting:
+                    print ("title close enough")
+                    return True
+        return false
 def set_pt_lang(yt_lang, conf_lang):
     YOUTUBE_LANGUAGE = {
         "arabic": 'ar',

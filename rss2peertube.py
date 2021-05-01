@@ -80,7 +80,7 @@ def get_video_data(channel_url,channel_name,dupe_setting):
         title = title.replace("(video)","")
         print("title:"+title)
         file = open ("videos.log.csv","a+")
-        file.write(channel_name+","+published+","+title+"\n")
+        file.write(channel_name+","+parsed+","+title+"\n")
         file.close
     # write the new channels and timestamps line to channels_timestamps.csv
     ct = open(channels_timestamps, "w")
@@ -163,7 +163,7 @@ def pt_cli_import(queue_item,channel_conf):
     cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
     cline = cline + " --tmpdir '"+ global_conf["video_download_dir"]+"'&"
     print(cline)
-    os.system(cline)
+    #os.system(cline)
     return True
 
 def log_video(line):

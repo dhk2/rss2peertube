@@ -147,7 +147,7 @@ def log_upload_error(yt_url,channel_conf):
     error_file.close()
     print("error !")
 
-def pt_cli_import(queue_item,channel_conf):
+def pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir):
     video_url = queue_item["link"]
     #print(video_url)
     pt_instance=channel_conf["peertube_instance"]
@@ -159,9 +159,9 @@ def pt_cli_import(queue_item,channel_conf):
     #print(video_url)
     pt_uname = channel_conf["peertube_username"]
     pt_passwd = channel_conf["peertube_password"]
-    cline = "cd "+ global_conf["cli_dir"] +" && node dist/server/tools/peertube-import-videos.js -u '"
+    cline = "cd "+ cli_dir +" && node dist/server/tools/peertube-import-videos.js -u '"
     cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
-    cline = cline + " --tmpdir '"+ global_conf["video_download_dir"]+"'&"
+    cline = cline + " --tmpdir '"+ dl_dir+"'&"
     print(cline)
     #os.system(cline)
     return True
@@ -178,6 +178,7 @@ def run_steps(conf):
     # run loop for every channel in the configuration file
     global_conf = conf["global"]
     dl_dir = global_conf["video_download_dir"]
+    cli_dir = global_conf["cli_dir"]
     if not path.exists(dl_dir):
         mkdir(dl_dir)
     channel_counter = 0
@@ -203,7 +204,7 @@ def run_steps(conf):
                     pt_result = pt_http_import(dl_dir, channel_conf, queue_item, access_token, thumb_extension, yt_lang)
                     print("trying to use wrong import method")
                 else:
-                    pt_result = pt_cli_import(queue_item,channel_conf)
+                    pt_result = pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir)
                 if pt_result:
                     print("done !")
                 else:

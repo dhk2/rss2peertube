@@ -39,7 +39,7 @@ def dupe_check(published,title,dupe_setting):
                 print (str(diff)+": "+str(match))
                 if diff < 1000 and match>.98:
                     print ("easy match")
-                    return true
+                    return True
                 if diff == 0:
                     print ("exact time")
                     return True

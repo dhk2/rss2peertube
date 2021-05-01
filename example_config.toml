@@ -6,11 +6,12 @@
 [global]
 video_download_dir = "/path/to/download/directory/" # must be absolute path and user writable directory
 use_pt_http_import = "false" # Peertube supports sending HTTP links to videos instead of downloading and uploading them. Use this option if you do not want to archive videos and have limited bandwidth. Setting this to true negates delete_videos as videos will not be downloaded, and disables transcoding.
-use_pt_cli_import = "true" #Use the CLI to have PeerTube import videos directly
+use_pt_cli_import = "true" #Use the CLI to have PeerTube import videos directly, currently only debugged method
 delete_videos = "true" # Delete videos and metadata after upload to peertube, lowercase string
 poll_frequency = 180 # poll frequency in minutes
 cli_dir = "/home/errhead/PeerTube/" # must be absolute path
 duplicate_match_percent = 50 # percentage match of title to determine. a higher number will let more possible duplicates through
+parallel_import = "false" # launches all import jobs in a new process instead of going through one at a time. Much faster for starting up channels, with much higher cpu loads.
 # For every channel, a new [channel.x] entry must be added in [channel] in sequential numerical order starting at 0
 # All fields must have values.
 [channel]

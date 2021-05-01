@@ -147,7 +147,7 @@ def log_upload_error(yt_url,channel_conf):
     error_file.close()
     print("error !")
 
-def pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir):
+def pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir,parallel_import):
     video_url = queue_item["link"]
     pt_instance=channel_conf["peertube_instance"]
     hack = pt_instance.split("/")
@@ -158,6 +158,8 @@ def pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir):
     cline = "cd "+ cli_dir +" && node dist/server/tools/peertube-import-videos.js -u '"
     cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
     cline = cline + " --tmpdir '"+ dl_dir+"'"
+    if parallel_import == true:
+        cline=cline+"&"
     print(cline)
     os.system(cline)
     return True
@@ -182,6 +184,7 @@ def run_steps(conf):
     channel_counter = 0
     for c in channel:
         dupe_setting = global_conf["dupe_setting"]
+        parallel_import = gobal_conf["parallel_import"]
         channel_url = channel[c]["channel_url"]
         channel_name = channel[c]["name"]
         parts=channel_url.split("/")
@@ -203,7 +206,7 @@ def run_steps(conf):
                     pt_result = pt_http_import(dl_dir, channel_conf, queue_item, access_token, thumb_extension, yt_lang)
                     print("using legacy import method")
                 else:
-                    pt_result = pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir)
+                    pt_result = pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir,parallel_import)
                 if pt_result:
                     print("done !")
                 else:
@@ -234,7 +237,9 @@ def main(argv):
 
   for opt, arg in opts:
     if opt == '-h':
-      print("youtube2peertube.py [-o|--once]")
+      print("youtube2peertube.py [-o|--once] [-r|--reset] [-R|--Reset]")
+      print("reset will clear the last date check and force videos to be rechecked")
+      print("Reset clears the previous duplicate data so nothing will marked duplicated")
       sys.exit()
     elif opt in ("-o", "--once"):
       run_once = True

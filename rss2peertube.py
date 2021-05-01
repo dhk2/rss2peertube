@@ -30,6 +30,7 @@ def get_video_data(channel_url,channel_name,dupe_setting):
     channel_found = False
     # check if channel name is found in channels_timestamps.csv
     for line in ctr:
+        print(line)
         line_list = line.split(',')
         if channel_name == line_list[0]:
             channel_found = True

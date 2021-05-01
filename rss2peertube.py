@@ -51,6 +51,7 @@ def get_video_data(channel_url,channel_name,dupe_setting):
             published_int = utils.convert_timestamp(published)
             parsed = str(published_int)
         if utils.dupe_check(published_int,i["title"],dupe_setting):
+            #go to next entry if already imported
             continue
         if not channel_found:
             # add the video to the queue
@@ -71,6 +72,16 @@ def get_video_data(channel_url,channel_name,dupe_setting):
                 ctr.append(ctr_line)
                 # and add current videos to queue.
                 queue.append(i)
+        #fix some of the typical differences in title text betwixt sites and comma induced errors in the csv
+        title = queue_item["title"]
+        title = title.replace(",",".")
+        title = title.replace("&#x27;","'")
+        title = title.replace("&quot;","'")
+        title = title.replace("(video)","")
+        print("title:"+title)
+        file = open ("videos.log.csv","a+")
+        file.write(channel_conf["name"]+","+published+","+title+"\n")
+        file.close
     # write the new channels and timestamps line to channels_timestamps.csv
     ct = open(channels_timestamps, "w")
     for line in ctr:
@@ -197,23 +208,7 @@ def run_steps(conf):
                     print("done !")
                 else:
                     log_upload_error(queue_item["link"],channel_conf)
-                p = queue_item["published"]
-                #shortcut to differentiate dates with a weekday, format
-                if "," in p:
-                    p = queue_item["updated_parsed"]
-                    published = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
-                else:
-                    published = str(utils.convert_timestamp(p))
-                #fix some of the typical differences in title text betwixt sites and comma induced errors in the csv
-                title = queue_item["title"]
-                title = title.replace(",",".")
-                title = title.replace("&#x27;","'")
-                title = title.replace("&quot;","'")
-                title = title.replace("(video)","")
-                print("title:"+title)
-                file = open ("videos.log.csv","a+")
-                file.write(channel_conf["name"]+","+published+","+title+"\n")
-                file.close
+
         channel_counter += 1
 
 def run(run_once=True):

@@ -230,16 +230,16 @@ def main(argv):
   logging.basicConfig(filename='example.log', level=logging.DEBUG)
   run_once=False
   try:
-    opts, args = getopt.getopt(argv,"horR",["help","once","reset","Reset"])
+    opts, args = getopt.getopt(argv,"horc",["help","once","reset","clear"])
   except:
     print("youtube2peertube.py [-o|--once]")
     sys(exit(2))
 
   for opt, arg in opts:
     if opt == '-h':
-      print("youtube2peertube.py [-o|--once] [-r|--reset] [-R|--Reset]")
-      print("reset will clear the last date check and force videos to be rechecked")
-      print("Reset clears the previous duplicate data so nothing will marked duplicated")
+      print("youtube2peertube.py [-o|--once] [-r|--reset] [-c|--clear]")
+      print("reset will reset channels_timestamps.csv and force videos to be rechecked")
+      print("clear will clear videos.log.csv so nothing will marked duplicate")
       sys.exit()
     elif opt in ("-o", "--once"):
       run_once = True

@@ -159,9 +159,9 @@ def pt_cli_import(queue_item,channel_conf):
     #print(video_url)
     pt_uname = channel_conf["peertube_username"]
     pt_passwd = channel_conf["peertube_password"]
-    cline = "cd /home/marc/PeerTube/ && node dist/server/tools/peertube-import-videos.js -u '"
+    cline = "cd "+ global_conf["cli_dir"] +" && node dist/server/tools/peertube-import-videos.js -u '"
     cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
-    cline = cline + " --tmpdir '/home/marc/Downloads'&"
+    cline = cline + " --tmpdir '"+ global_conf["video_download_dir"]+"'&"
     print(cline)
     os.system(cline)
     return True

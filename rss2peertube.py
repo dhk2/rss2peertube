@@ -184,7 +184,7 @@ def run_steps(conf):
     channel_counter = 0
     for c in channel:
         dupe_setting = global_conf["dupe_setting"]
-        parallel_import = gobal_conf["parallel_import"]
+        parallel_import = global_conf["parallel_import"]
         channel_url = channel[c]["channel_url"]
         channel_name = channel[c]["name"]
         parts=channel_url.split("/")

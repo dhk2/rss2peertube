@@ -163,7 +163,7 @@ def pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir):
     cline = cline +server_url+"' -U '"+pt_uname+"' --password '"+pt_passwd+"' --target-url '"+video_url+"'"
     cline = cline + " --tmpdir '"+ dl_dir+"'&"
     print(cline)
-    #os.system(cline)
+    os.system(cline)
     return True
 
 def log_video(line):

@@ -51,7 +51,7 @@ def get_video_data(channel_url,channel_name,dupe_setting):
         if "youtube" in channel_url:
             published_int = utils.convert_timestamp(published)
             parsed = str(published_int)
-        if utils.dupe_check(published_int,title,dupe_setting):
+        if dupe_setting >0 and utils.dupe_check(published_int,title,dupe_setting):
             #go to next entry if already imported
             continue
         if not channel_found:

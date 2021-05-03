@@ -156,7 +156,7 @@ def run_steps(conf):
         if len(queue) > 0:
             for queue_item in queue:
                 print("mirroring " + queue_item["title"])
-                    pt_result = pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir,parallel_import)
+                pt_result = pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir,parallel_import)
                 if not pt_result:
                     print("error importing video")
                     log_upload_error(queue_item["link"],channel_conf)

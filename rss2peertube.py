@@ -131,14 +131,14 @@ def run_steps(conf):
     global_conf = conf["global"]
     dl_dir = global_conf["video_download_dir"]
     cli_dir = global_conf["cli_dir"]
+    dupe_setting = global_conf["dupe_setting"]
+    parallel_import = global_conf["parallel_import"]
     if not path.exists(dl_dir):
         mkdir(dl_dir)
     if not path.exists(cli_dir):
         print("either the CLI tools aren't installed, or the path isn't configured in config.toml")
     channel_counter = 0
     for c in channel:
-        dupe_setting = global_conf["dupe_setting"]
-        parallel_import = global_conf["parallel_import"]
         channel_url = channel[c]["channel_url"]
         channel_name = channel[c]["name"]
         parts=channel_url.split("/")
@@ -174,7 +174,6 @@ def run(run_once=True):
 
 
 def main(argv):
-  logging.basicConfig(filename='example.log', level=logging.DEBUG)
   run_once=False
   try:
     opts, args = getopt.getopt(argv,"horc",["help","once","reset","clear"])

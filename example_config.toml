@@ -9,8 +9,8 @@ use_pt_http_import = "false" # Peertube supports sending HTTP links to videos in
 use_pt_cli_import = "true" #Use the CLI to have PeerTube import videos directly, currently only debugged method
 delete_videos = "true" # Delete videos and metadata after upload to peertube, lowercase string
 poll_frequency = 180 # poll frequency in minutes
-cli_dir = "/home/errhead/PeerTube/" # must be absolute path
-duplicate_match_percent = 50 # percentage match of title to determine. a higher number will let more possible duplicates through
+cli_dir = "/path/to/PeerTube/CLI/Tools/Folder" # must be absolute path channels_timestamps.csv "/home/errhead/PeerTube/"
+duplicate_match_percent = 0 # percentage match of title to determine. a higher number will let more possible duplicates through, 0 disables, only needed if checking multiple feeds for the same account
 parallel_import = "false" # launches all import jobs in a new process instead of going through one at a time. Much faster for starting up channels, with much higher cpu loads.
 # For every channel, a new [channel.x] entry must be added in [channel] in sequential numerical order starting at 0
 # All fields must have values.

@@ -78,7 +78,7 @@ def get_video_data(channel_url,channel_name,dupe_setting):
         title = title.replace("&#x27;","'")
         title = title.replace("&quot;","'")
         title = title.replace("(video)","")
-        print("title:"+title)
+        #print("title:"+title)
         file = open ("videos.log.csv","a+")
         file.write(channel_name+","+parsed+","+title+"\n")
         file.close

@@ -104,7 +104,7 @@ def log_upload_error(yt_url,channel_conf):
 
 def pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir,parallel_import):
     video_url = queue_item["link"]
-    if "podbean" in video_url
+    if "podbean" in video_url:
         video_url = queue_item.get('enclosures', [])[0].url
     pt_instance=channel_conf["peertube_instance"]
     hack = pt_instance.split("/")

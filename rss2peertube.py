@@ -44,11 +44,14 @@ def get_video_data(channel_url,channel_name,dupe_setting):
         title = i["title"]
         #updated = i["updated"]
         parsed=published
+        if "podbean" in channel_url:
+            print i.enclosures[0].href
         if ("odysee" in channel_url) or ("bitchute" in channel_url) or ("podbean"):
             p = i["updated_parsed"]
             parsed = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)
             published_int = int(parsed)
-        if "youtube" in channel_url:
+
+        if "https://youtube" in channel_url:
             published_int = utils.convert_timestamp(published)
             parsed = str(published_int)
         if dupe_setting >0 and utils.dupe_check(published_int,title,dupe_setting):

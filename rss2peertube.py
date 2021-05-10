@@ -45,7 +45,7 @@ def get_video_data(channel_url,channel_name,dupe_setting):
         #updated = i["updated"]
         parsed=published
         if "podbean" in channel_url:
-            print(i.get('enclosures', [])[0].url)
+            i[link]=i.get('enclosures', [])[0].url
         if ("odysee" in channel_url) or ("bitchute" in channel_url) or ("podbean"):
             p = i["updated_parsed"]
             parsed = str(p.tm_year)+str(p.tm_mon).zfill(2)+str(p.tm_mday).zfill(2)+str(p.tm_hour).zfill(2)+str(p.tm_min).zfill(2)+str(p.tm_sec).zfill(2)

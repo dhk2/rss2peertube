@@ -38,6 +38,7 @@ def get_video_data(channel_url,channel_name,dupe_setting):
     if not channel_found:
         print("new channel added to config: " + channel_name)
     print(str(datetime.now().strftime("%m/%d %H:%M:%S"))+" : checking "+str(len(entries))+" in "+channel_name+"          ")
+    print ("\033[2A")
     # iterate through video entries for channel, parse data into objects for use
     for pos, i in enumerate(reversed(entries)):
         published = i["published"]
@@ -106,6 +107,7 @@ def pt_cli_import(queue_item,channel_conf,cli_dir,dl_dir,parallel_import):
     video_url = queue_item["link"]
     if "podbean" in video_url:
         video_url = queue_item.get('enclosures', [])[0].url
+
     pt_instance=channel_conf["peertube_instance"]
     hack = pt_instance.split("/")
     server_url=hack[2]

@@ -94,10 +94,9 @@ async function run (url: string, user: UserInfo) {
 // start of rss feed changes
 
 
-let Parser = require('rss-parser');
-let parser = new Parser();
+  let Parser = require('rss-parser');
+  let parser = new Parser();
 
-(async () => {
 
   let feed = await parser.parseURL(url);
   console.log(feed.title);
@@ -106,7 +105,6 @@ let parser = new Parser();
     console.log(item.title + ':' + item.link)
   });
 
-})();
 /*  infoArray = [].concat(info)
   if (options.first) {
     infoArray = infoArray.slice(0, options.first)

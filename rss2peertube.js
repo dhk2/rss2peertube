@@ -75,7 +75,7 @@ async function run (url: string, user: UserInfo) {
   }
 
   const youtubeDL = await safeGetYoutubeDL()
-
+/*
   let info = await getYoutubeDLInfo(youtubeDL, options.targetUrl, command.args)
 
   if (!Array.isArray(info)) info = [ info ]
@@ -90,19 +90,32 @@ async function run (url: string, user: UserInfo) {
   }
 
   let infoArray: any[]
+*/
 // start of rss feed changes
 
 
+let Parser = require('rss-parser');
+let parser = new Parser();
 
+(async () => {
 
+  let feed = await parser.parseURL(url);
+  console.log(feed.title);
 
-  infoArray = [].concat(info)
+  feed.items.forEach(item => {
+    console.log(item.title + ':' + item.link)
+  });
+
+})();
+/*  infoArray = [].concat(info)
   if (options.first) {
     infoArray = infoArray.slice(0, options.first)
   } else if (options.last) {
     infoArray = infoArray.slice(-options.last)
   }
+*/
   // Normalize utf8 fields
+  infoArray = feed.items;
   infoArray = infoArray.map(i => normalizeObject(i))
 
   log.info('Will download and upload %d videos.\n', infoArray.length)
@@ -112,13 +125,13 @@ async function run (url: string, user: UserInfo) {
       if (index > 0 && options.waitInterval) {
         log.info("Wait for %d seconds before continuing.", options.waitInterval / 1000)
         await new Promise(res => setTimeout(res, options.waitInterval))
-      }
+      }/*
       await processVideo({
         cwd: options.tmpdir,
         url,
         user,
         youtubeInfo: info
-      })
+      })*/
     } catch (err) {
       console.error('Cannot process video.', { info, url, err })
     }
